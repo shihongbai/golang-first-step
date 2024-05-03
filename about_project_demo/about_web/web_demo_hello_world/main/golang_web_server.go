@@ -7,7 +7,16 @@ import (
 	"strings"
 )
 
-// 介绍文档：https://juejin.cn/post/7127535913483108360
+// http包详细介绍文档：https://juejin.cn/post/7127535913483108360
+
+/*
+*
+http包的执行流程
+1. 端口监听：func ListenAndServe(addr string, handler Handler) error
+2. 请求解析：绑定并listen
+3. 路由分配：请求并创建连接
+4. 响应处理
+*/
 func sayHelloName(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()       //解析参数，默认是不会解析的
 	fmt.Println(r.Form) //这些信息是输出到服务器端的打印信息
