@@ -77,24 +77,42 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // InsertUserHandler 处理 /insert_user 接口
 func InsertUserHandler(w http.ResponseWriter, r *http.Request) {
-	// 在这里实现新增用户逻辑
-	// 示例：从请求中读取用户信息，然后插入数据库
-	// 这里为了简化示例，直接在代码中指定了用户信息
-	user := User{ID: 1, Username: "john_doe", Password: "secret"}
+	// 如果是 POST 请求，则处理新增用户表单提交
+	if r.Method == http.MethodPost {
+		// 获取表单提交的用户名和密码
+		username := r.FormValue("username")
+		password := r.FormValue("password")
 
-	// 插入数据库
-	stmt, err := db.Prepare("INSERT INTO users(username, password) VALUES(?, ?)")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		// 插入新用户到数据库
+		_, err := db.Exec("INSERT INTO user(username, password) VALUES(?, ?)", username, password)
+		if err != nil {
+			// 插入失败，返回错误信息
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// 插入成功，返回成功状态
+		fmt.Fprintf(w, "User inserted successfully")
 		return
 	}
-	defer stmt.Close()
 
-	_, err = stmt.Exec(user.Username, user.Password)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	fmt.Fprintf(w, "User inserted successfully")
+	// 如果是 GET 请求，则返回新增用户表单页面
+	// 注意：这里只是简单的示例，实际中需要一个美观的 HTML 表单页面
+	fmt.Fprintf(w, `
+        <html>
+            <head>
+                <title>Insert User</title>
+            </head>
+            <body>
+                <h2>Insert User</h2>
+                <form method="post" action="/insert_user">
+                    <label for="username">Username:</label><br>
+                    <input type="text" id="username" name="username"><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password"><br><br>
+                    <input type="submit" value="Insert">
+                </form>
+            </body>
+        </html>
+    `)
 }
