@@ -3,7 +3,7 @@ package controller
 import (
 	"database/sql"
 	"fmt"
-	"github.com/shihongbai/golang-first-step/about_project_demo/about_web/golang-webservice-example/config"
+	"golang-first-step/about_project_demo/about_web/golang-webservice-example/config"
 	"net/http"
 )
 
