@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/shihongbai/golang-first-step/about_project_demo/about_web/golang-webservice-example/controller"
+	"golang-first-step/about_project_demo/about_web/golang-webservice-example/controller"
 	"log"
 	"net/http"
 )
