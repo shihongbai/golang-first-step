@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "golang-first-step/about_project_demo/about_rpc/grpc";
+
+message String {
+  string value = 1;
+}
+
+service HelloService {
+  rpc Hello (String) returns (String);
+}
