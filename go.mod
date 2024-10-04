@@ -3,6 +3,7 @@ module golang-first-step
 go 1.22.2
 
 require (
+	github.com/Shopify/sarama v1.19.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/websocket v1.5.3
