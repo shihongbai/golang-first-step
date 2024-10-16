@@ -1,4 +1,4 @@
-package etcd_demo
+package crud
 
 import (
 	"context"
@@ -24,7 +24,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
 	// put
-	_, err = cli.Put(ctx, "test", "hello etcd")
+	str := `[{"path":"d:/developdata/logs/s2.log","topic":"web_log"},{"path":"d:/developdata/logs/s3.log","topic":"web_log"},{"path":"d:/developdata/logs/s4.log","topic":"nana"}]`
+	_, err = cli.Put(ctx, "collect_log_conf", str)
 	if err != nil {
 		fmt.Printf("put failed, err:%v\n", err)
 		return
@@ -34,7 +35,7 @@ func main() {
 
 	// get
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	gt, err := cli.Get(ctx, "test")
+	gt, err := cli.Get(ctx, "collect_log_conf")
 	if err != nil {
 		fmt.Printf("get failed, err:%v\n", err)
 		return
