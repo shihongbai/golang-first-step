@@ -1,4 +1,4 @@
-package main
+package gopsutil_demo
 
 import (
 	"fmt"
@@ -7,27 +7,17 @@ import (
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/load"
 	"github.com/shirou/gopsutil/mem"
+	"github.com/shirou/gopsutil/net"
 	"time"
 )
 
-func main() {
-	getCpuInfo()
-}
-
 // cpu info
-func getCpuInfo() {
-	cpuInfos, err := cpu.Info()
-	if err != nil {
-		fmt.Printf("get cpu info failed, err:%v", err)
-	}
-	for _, ci := range cpuInfos {
-		fmt.Println(ci)
-	}
+func GetCpuInfo() float64 {
 	// CPU使用率
-	for {
-		percent, _ := cpu.Percent(time.Second, false)
-		fmt.Printf("cpu percent:%v\n", percent)
-	}
+	percent, _ := cpu.Percent(time.Second, false)
+	fmt.Printf("cpu percent:%v\n", percent)
+
+	return percent[0]
 }
 
 // 获取cpu负载
@@ -64,5 +54,12 @@ func getDiskInfo() {
 	ioStat, _ := disk.IOCounters()
 	for k, v := range ioStat {
 		fmt.Printf("%v:%v\n", k, v)
+	}
+}
+
+func getNetInfo() {
+	info, _ := net.IOCounters(true)
+	for index, v := range info {
+		fmt.Printf("%v:%v send:%v recv:%v\n", index, v, v.BytesSent, v.BytesRecv)
 	}
 }
