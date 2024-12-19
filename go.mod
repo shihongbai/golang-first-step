@@ -10,6 +10,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/influxdata/influxdb1-client v0.0.0-20220302092344-a9ab5670611c
 	github.com/shirou/gopsutil v3.21.11+incompatible
+	github.com/sirupsen/logrus v1.8.1
 	go.etcd.io/etcd v3.3.27+incompatible
 	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948
 	google.golang.org/grpc v1.67.1

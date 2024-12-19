@@ -1,6 +1,12 @@
 package main
 
-import "net/http"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+)
 
 // golang Web项目：chit chat
 func main() {
@@ -17,4 +23,15 @@ func main() {
 		Handler: mux,
 	}
 	server.ListenAndServe()
+
+}
+
+func createPost() {
+	reqBody, _ := json.Marshal(map[string]string{"key1": "val1", "key2": "val2"})
+
+	resp, _ := http.Post(":8091", "application/json", bytes.NewReader(reqBody))
+	defer resp.Body.Close()
+
+	respBody, _ := io.ReadAll(resp.Body)
+	fmt.Printf("resp: %s", respBody)
 }
